@@ -31,8 +31,182 @@ We use this categorical data encoding technique when the features are nominal(do
 • Yeojohnson method
 
 # CODING AND OUTPUT:
-       # INCLUDE YOUR CODING AND OUTPUT SCREENSHOTS HERE
+## Encoding:
+```
+import pandas as pd
+import numpy as np
+from scipy import stats
+df = pd.read_csv('data.csv')
+print(df)
+```
+## Ordinal Encoding:
+```
+from sklearn.preprocessing import OrdinalEncoder,LabelEncoder
+climate = ['Cold','Warm','Hot','Very Hot']
+ele = OrdinalEncoder(categories=[climate])
+ele.fit_transform(df[["Ord_1"]])
+```
+
+```
+df['bo2'] = ele.fit_transform(df[["Ord_1"]])
+df
+```
+
+## Label Encoding:
+```
+le = LabelEncoder()
+df2 = df.copy()
+df2['Ord_2'] = le.fit_transform(df2['Ord_2'])
+df2
+```
+
+```
+df2['Ord_2'] = le.fit_transform(df2['Ord_2'])
+df2
+```
+## OneHot Encoding:
+```
+from sklearn.preprocessing import OneHotEncoder
+ohe = OneHotEncoder()
+df3 = df.copy()
+enc = pd.DataFrame(ohe.fit_transform(df2[["City"]]))
+df2 = pd.concat([enc,df3],axis = 1)
+df2
+```
+
+```
+pd.get_dummies(df,columns=['City'])
+```
+
+## Binary Encoding:
+```
+from category_encoders import BinaryEncoder
+df = pd.read_csv('data.csv')
+df
+```
+
+```
+be = BinaryEncoder()
+nd = be.fit_transform(df['Ord_2'])
+df
+```
+
+## Target Encoding:
+```
+from category_encoders import TargetEncoder
+te = TargetEncoder()
+CC = df.copy()
+new = te.fit_transform(CC["City"],y=CC["Target"])
+CC = pd.concat([CC,new],axis = 1)
+CC
+```
+
+```
+if 'City' in CC.columns:
+    CC = CC.drop('City', axis=1)
+new = te.fit_transform(X = df["City"],y=df["Target"])
+CC = pd.concat([CC.reset_index(drop=True),new.reset_index(drop=True)],axis = 1)
+CC
+```
+
+## Transformation
+```
+df = pd.read_csv('Data_to_Transform.csv')
+df
+```
+
+```
+df.skew()
+```
+
+## Function Transformation:
+```
+np.log(df["Highly Positive Skew"])
+```
+
+```
+np.reciprocal(df["Moderate Positive Skew"])
+```
+
+```
+np.sqrt(df["Highly Positive Skew"])
+```
+
+```
+np.square(df["Highly Positive Skew"])
+```
+
+## Power Transformation
+```
+df["Highly Positive Skew_boxcox"], parameters = stats.boxcox(df["Highly Positive Skew"])
+df
+```
+
+```
+df["Moderate Negative Skew_yeojohnson"], parameters = stats.yeojohnson(df["Moderate Negative Skew"])
+df
+```
+
+```
+from sklearn.preprocessing import QuantileTransformer
+qt = QuantileTransformer(output_distribution = 'normal')
+df["Moderate Negative Skew_1"] = qt.fit_transform(df[["Moderate Negative Skew"]])
+df
+
+```
+
+```
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
+import scipy.stats as stats
+sm.qqplot(df["Moderate Negative Skew"],line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(df["Moderate Negative Skew_1"],line = '45')
+plt.show()
+```
+
+```
+df["Highly Negative Skew_1"] = qt.fit_transform(df[["Highly Negative Skew"]])
+sm.qqplot(df["Highly Negative Skew"],line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(np.reciprocal(df["Moderate Negative Skew_1"]),line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(df["Highly Negative Skew_1"],line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(np.abs(df["Highly Negative Skew_1"]),line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(np.log(df["Highly Negative Skew_1"]),line = '45')
+plt.show()
+```
+
+```
+sm.qqplot(np.sqrt(df["Moderate Negative Skew_1"]),line='45')
+plt.show()
+```
+
+```
+pd.concat([CC,new],axis = 1)
+```
+
 # RESULT:
-       # INCLUDE YOUR RESULT HERE
+Thus, we have successfully performed Feature Encoding and Transformation process and saved the data to a file.
+
 
        
