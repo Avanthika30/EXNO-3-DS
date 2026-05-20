@@ -93,12 +93,14 @@ from category_encoders import BinaryEncoder
 df = pd.read_csv('data.csv')
 df
 ```
+<img width="503" height="372" alt="image" src="https://github.com/user-attachments/assets/727dc3e0-4c77-4e10-9d33-c70f69f43082" />
 
 ```
 be = BinaryEncoder()
 nd = be.fit_transform(df['Ord_2'])
 df
 ```
+<img width="527" height="377" alt="image" src="https://github.com/user-attachments/assets/d0033c36-36a2-4ee1-8d6f-976497cafa66" />
 
 ## Target Encoding:
 ```
@@ -109,6 +111,7 @@ new = te.fit_transform(CC["City"],y=CC["Target"])
 CC = pd.concat([CC,new],axis = 1)
 CC
 ```
+<img width="586" height="382" alt="image" src="https://github.com/user-attachments/assets/e3a063bf-ff9f-4b9a-a40f-0c7ceb8ff769" />
 
 ```
 if 'City' in CC.columns:
@@ -117,6 +120,7 @@ new = te.fit_transform(X = df["City"],y=df["Target"])
 CC = pd.concat([CC.reset_index(drop=True),new.reset_index(drop=True)],axis = 1)
 CC
 ```
+<img width="505" height="383" alt="image" src="https://github.com/user-attachments/assets/88ab20f6-9143-40fa-9de4-5197cff1f250" />
 
 ## Transformation
 ```
